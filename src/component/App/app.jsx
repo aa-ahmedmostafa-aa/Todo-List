@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
+import {toast, ToastContainer} from "react-toastify";
 import TodoList from "../todoList";
 import "./app.css";
 import Header from "./../layouts/header";
@@ -40,17 +41,22 @@ class App extends Component {
     });
   };
   handelSubmit = (title) => {
-    //clone
-    let todos = [...this.state.todos];
-    let obj = { id: todos.length + 1, completed: false, title: title };
-    //edit
-    todos.push(obj);
-    //setState
-    this.setState({ todos });
+    if (title == "") {
+      toast.error("Sorry Can't Submit Empty Todo");
+    } else {
+      //clone
+      let todos = [...this.state.todos];
+      let obj = { id: todos.length + 1, completed: false, title: title };
+      //edit
+      todos.push(obj);
+      //setState
+      this.setState({ todos });
+    }
   };
   render() {
     return (
       <React.Fragment>
+        <ToastContainer/>
         <div className="container">
           <Header />
           <Switch>
